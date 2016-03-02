@@ -67,7 +67,7 @@ def get_sparseFilter(numFeatures, patches, patchesFile, maxiter=100):
         SF.fit(patches)
         SF.saveSF(sf_file)
         print "[+] Sparse filter trained"
-    #.SF.visualiseLearnedFeatures()
+    SF.visualiseLearnedFeatures()
     return SF
 
 def load_data(dataFile, imageDim):
@@ -530,11 +530,11 @@ def main():
         #train_linearSVM(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
         #                sgd, save=True, prefix="")
     
-        train_SoftMaxOnline(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
-                            sgd, save=True, prefix="")
+        #train_SoftMaxOnline(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
+        #                    sgd, save=True, prefix="")
 
-        #train_Softmax(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
-        #        sgd, save=True, prefix="")
+        train_Softmax(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
+                      sgd, save=True, prefix="")
 
     elif cv == True:
         trainImages, trainLabels, numTrainImages,\
@@ -553,8 +553,8 @@ def main():
         Y = np.squeeze(trainLabels)
                            
         #C = cross_validate_linearSVM(dataFile, X, Y, featuresFile, imageDim, sgd)
-        C = cross_validate_SoftMaxOnline(dataFile, X, Y, featuresFile, imageDim, sgd)
-        #C = cross_validate_Softmax(dataFile, X, Y, featuresFile, imageDim, sgd)
+        #C = cross_validate_SoftMaxOnline(dataFile, X, Y, featuresFile, imageDim, sgd)
+        C = cross_validate_Softmax(dataFile, X, Y, featuresFile, imageDim, sgd)
 
         testX = np.transpose(pooledFeaturesTest, (0,2,3,1))
         testX = np.reshape(testX, (int((pooledFeaturesTest.size)/float(numTestImages)), \
@@ -565,10 +565,10 @@ def main():
 
         #train_linearSVM(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
         #                sgd, save=True, prefix="")
-        train_SoftmaxOnline(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
-                            sgd, save=True, prefix="")
-        #train_Softmax(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
-        #              sgd, save=True, prefix="")
+        #train_SoftmaxOnline(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
+        #                    sgd, save=True, prefix="")
+        train_Softmax(C, dataFile, X, Y, testX, testY, featuresFile, imageDim, \
+                      sgd, save=True, prefix="")
 
 
 if __name__ == "__main__":
